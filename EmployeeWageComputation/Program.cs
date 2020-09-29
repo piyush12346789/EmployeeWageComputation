@@ -5,47 +5,37 @@ namespace EmployeeWageComputation
     {
         public const int IS_FULL_TIME = 1;
         public const int IS_PART_TIME = 2;
-        public const int EMP_WAGE_PER_HR = 20;
-        public const int NUMBER_OF_WORKING_DAYS = 20;
-        public const int MAX_HRS_IN_MONTH = 100;
-        public static int empHrs = 0;
-        public static int totalEmpHrs = 0;
-        public static int totalWorkingDays = 0;
-        public static int GetWorkingHour(int ran)
+        public static void compEmployeeWage(string company, int empRatePerHour, int numOfWorkingDays, int maxHrsPerMonth)
         {
             int empHrs = 0;
-            switch (ran)
-            {
-                case IS_PART_TIME:
-                    empHrs = 4;
-                    break;
-                case IS_FULL_TIME:
-                    empHrs = 8;
-                    break;
-                default:
-                    empHrs = 0;
-                    break;
-                }
-            return empHrs;
-        }
-        public static void ComputeEmployeeWage()
-        {
-            int monthlySalary = 0;
-            while(totalWorkingDays < MAX_HRS_IN_MONTH && totalWorkingDays < NUMBER_OF_WORKING_DAYS)
+            int totalEmpHrs = 0;
+            int totalWorkingDays = 0;
+            while (totalEmpHrs <= maxHrsPerMonth && totalWorkingDays < numOfWorkingDays)
             {
                 totalWorkingDays++;
                 Random random = new Random();
-                int ran = (random.Next() % 3) + 1;
-                empHrs = GetWorkingHour(ran);
-                totalEmpHrs = totalEmpHrs + empHrs;
+                int empCheck = random.Next(0, 3);
+                switch (empCheck)
+                {
+                    case IS_PART_TIME:
+                        empHrs = 4;
+                        break;
+                    case IS_FULL_TIME:
+                        empHrs = 8;
+                        break;
+                    default:
+                        empHrs = 0;
+                        break;
+                }
+                totalEmpHrs += empHrs;
             }
-            monthlySalary = EMP_WAGE_PER_HR * totalEmpHrs;
-            Console.WriteLine("Total salary of employee in a month is " + monthlySalary);
+            int totalEmpWage = totalEmpHrs * empRatePerHour;
+            Console.WriteLine("Total Emp Wage for Company " + company + " is " + totalEmpWage);
         }
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to Employee Wage Computation.");
-            ComputeEmployeeWage();
+            compEmployeeWage("Reliance", 10, 22, 120);
+            compEmployeeWage("TATA", 25, 18, 80);
         }
     }
 }
